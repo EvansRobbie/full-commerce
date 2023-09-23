@@ -11,13 +11,13 @@ const ProductDetails = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-5">
             <aside>
               <div className="border border-gray-200 shadow-sm p-3 text-center rounded mb-5">
-                <Image
+                {/* <Image
                   className="object-cover inline-block"
                   src="/logo192.png"
                   alt="Product title"
                   width="340"
                   height="340"
-                />
+                /> */}
               </div>
               <div className="space-x-2 overflow-auto text-center whitespace-nowrap">
                 <a className="inline-block border border-gray-200 p-1 rounded-md hover:border-blue-500 cursor-pointer">
