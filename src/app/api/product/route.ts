@@ -14,3 +14,16 @@ export const POST = async (req:Request) =>{
         return new NextResponse('Failed to create Product', {status:400})
     }
 }
+
+export const GET = async (req:Request) =>{
+    await dbConnect()
+    try {
+        const newProduct = await Product.find()
+        return NextResponse.json(newProduct, {status:200})
+
+    } catch (error) {
+        console.log(error)
+        return new NextResponse('Failed to create Product', {status:400})
+    }
+}
+

@@ -1,9 +1,22 @@
-import Image from 'next/image'
+import ListProducts from '@/components/products/ListProducts'
+import { notFound } from 'next/navigation'
 
-export default function Home() {
+const getProduct = async () => {
+  const response = await fetch(`http://localhost:3001/api/product`,  { next: { revalidate: 3600 } })
+  if (!response.ok) {
+    return notFound()
+  }
+  return response.json()
+  // console.log(response)
+}
+
+
+export default async function Home() {
+  const productData = await getProduct()
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-     Hello
+    <main className="">
+      <ListProducts data= {productData} />
+     
     </main>
   )
 }
