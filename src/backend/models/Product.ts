@@ -10,7 +10,7 @@ const productSchema = new Schema({
         required:[true, 'Please enter Product description']
     },
     price:{
-        type:String,
+        type:Number,
         required:[true, 'Please enter Product price']
     },
     images:[
@@ -43,7 +43,7 @@ const productSchema = new Schema({
         required:[true, 'Please enter Product seller']
     },
     stock:{
-        type:String,
+        type:Number,
         required:[true, 'Please enter Product stock']
     },
     ratings:{
