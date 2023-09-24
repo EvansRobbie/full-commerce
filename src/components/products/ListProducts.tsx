@@ -5,25 +5,10 @@ import Filters from "../layout/Filters";
 import Header from "../layout/Headers";
 import Link from "next/link";
 import Image from "next/image";
+import { productEntity } from "@/type/type";
 
 interface productProps {
-    data:{
-        _id:string;
-        name: string,
-        description: string,
-        price: number,
-        category: string,
-        seller: string,
-        stock: number,
-        ratings: string,
-        images: {
-            public_id:string
-            url:string
-        }[],
-        reviews: string[],
-        createdAt: Date
-
-    }[]
+    data:productEntity[]
 
 }
 const ListProducts = ({data}:productProps) => {
@@ -60,7 +45,7 @@ const ListProducts = ({data}:productProps) => {
                                 </div>
                                 <div className="md:w-2/4">
                                     <div className="p-4">
-                                    <Link href={`/`} className="hover:text-blue-600">
+                                    <Link href={`/products/${product._id}`} className="hover:text-blue-600">
                                         {product.name}
                                     </Link>
                                     <div className="flex flex-wrap items-center space-x-2 mb-2">
