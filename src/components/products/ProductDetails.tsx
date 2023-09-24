@@ -4,9 +4,13 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import StarRatings from "react-star-ratings";
+import BreadCrumbs from "../layout/BreadCrumbs";
+import { usePathname } from "next/navigation";
 
 const ProductDetails = ({ productId }: { productId: string }) => {
     const [data, setData] = useState<productEntity | null>(null)
+    const pathname = usePathname()
+    console.log(pathname)
     useEffect(() => {
         const fetchDetails = async () => {
             try {
@@ -25,9 +29,13 @@ const ProductDetails = ({ productId }: { productId: string }) => {
     const setImagePreview = (url: string) => {
         imgRef.current?.setAttribute("src", url);
     }
+    const breadCrumbs = [
+        {name : "Home", url: "/"},
+        {name : `${data?.name?.substring(0, 300)}...`, url: `/products/${data?._id}`},
+    ]
     return (
         <>
-            {/* <BreadCrumbs /> */}
+            <BreadCrumbs replacePath={pathname}  />
             <section className="bg-white py-10">
                 <div className="container max-w-screen-xl mx-auto px-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-5">
