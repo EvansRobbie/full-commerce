@@ -8,7 +8,7 @@ interface productProps{
 }
 
 const CartItems = ({products}:productProps) => {
-    const {increaseQuantity, decreaseQuantity} = useCartContext()
+    const {increaseQuantity, decreaseQuantity, removeFromCart} = useCartContext()
     // console.log(products)
   return (
    <>
@@ -57,16 +57,16 @@ const CartItems = ({products}:productProps) => {
             </div>
             <div>
                 <div className="leading-5">
-                <p className="font-semibold not-italic">$898</p>
+                <p className="font-semibold not-italic">$ {Math.floor(product.price * product.qty!)}</p>
                 <small className="text-gray-400">
                     {" "}
-                    $98 / per item{" "}
+                    $ {product.price} / per item{" "}
                 </small>
                 </div>
             </div>
             <div className="flex-auto">
                 <div className="float-right">
-                <a className="px-4 py-2 inline-block text-red-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer">
+                <a onClick={()=>removeFromCart(product._id, product.name)} className="px-4 py-2 inline-block text-red-600 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 cursor-pointer">
                     Remove
                 </a>
                 </div>
