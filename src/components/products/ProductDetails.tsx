@@ -6,11 +6,13 @@ import React, { useEffect, useRef, useState } from "react";
 import StarRatings from "react-star-ratings";
 import BreadCrumbs from "../layout/BreadCrumbs";
 import { usePathname } from "next/navigation";
+import { useCartContext } from "@/context/CartContext";
 
 const ProductDetails = ({ productId }: { productId: string }) => {
     const [data, setData] = useState<productEntity | null>(null)
     const pathname = usePathname()
-    console.log(pathname)
+    const {addToCart} = useCartContext()
+    // console.log(pathname)
     useEffect(() => {
         const fetchDetails = async () => {
             try {
@@ -102,7 +104,7 @@ const ProductDetails = ({ productId }: { productId: string }) => {
                             </p>
 
                             <div className="flex flex-wrap gap-2 mb-5">
-                                <button className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
+                                <button onClick={()=>addToCart(data!, data?._id!)} className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
                                     <i className="fa fa-shopping-cart mr-2"></i>
                                     Add to cart
                                 </button>

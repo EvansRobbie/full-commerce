@@ -141,12 +141,9 @@ const [cart, dispatch] = useReducer(reducer, { items: [] });
      
     }
     dispatch({ type: ACTION.ADD_TO_CART, payload: item })
-    fetchCart()
+    // fetchCart()
   }
-// add ittems to local storage 
-// useEffect(()=>{
 
-// }, [cart])
   const removeFromCart = (id:string, name:string) =>{
     toast.success(`${name} removed from Cart`)
     // AsyncStorageService.removeData("cartItems");

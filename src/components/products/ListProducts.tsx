@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { productEntity } from "@/type/type";
 import CustomPagination from "../layout/Pagination";
+import { useCartContext } from "@/context/CartContext";
 
 interface productProps {
     data:{
@@ -18,6 +19,7 @@ interface productProps {
 
 }
 const ListProducts = ({data}:productProps) => {
+    const {addToCart} = useCartContext()
    
   return (
     <>
@@ -83,7 +85,7 @@ const ListProducts = ({data}:productProps) => {
 
                                     <p className="text-green-500">Free Shipping</p>
                                     <div className="my-3">
-                                        <a className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 cursor-pointer">
+                                        <a onClick={()=>addToCart(product, product._id)} className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 cursor-pointer">
                                         {" "}
                                         Add to Cart{" "}
                                         </a>
