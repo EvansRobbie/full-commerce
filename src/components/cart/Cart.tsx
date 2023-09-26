@@ -6,7 +6,8 @@ import React from "react";
 import CartItems from "./CartItems";
 
 const Cart = () => {
-    const {cart} = useCartContext()
+    const {cart, totalPrice} = useCartContext()
+    const taxAmount = (totalPrice * 0.15).toFixed(2)
   return (
     <>
       <section className="py-5 sm:py-7 bg-blue-100">
@@ -26,7 +27,7 @@ const Cart = () => {
                 <ul className="mb-5">
                   <li className="flex justify-between text-gray-600  mb-1">
                     <span>Total price:</span>
-                    <span>$98</span>
+                    <span>$ {totalPrice}</span>
                   </li>
                   <li className="flex justify-between text-gray-600  mb-1">
                     <span>Total Units:</span>
@@ -34,11 +35,11 @@ const Cart = () => {
                   </li>
                   <li className="flex justify-between text-gray-600  mb-1">
                     <span>TAX:</span>
-                    <span>$78</span>
+                    <span>$ {taxAmount}</span>
                   </li>
                   <li className="text-lg font-bold border-t flex justify-between mt-3 pt-3">
                     <span>Total price:</span>
-                    <span>$898</span>
+                    <span>$ {Math.floor(Number(totalPrice) + Number(taxAmount))}</span>
                   </li>
                 </ul>
 

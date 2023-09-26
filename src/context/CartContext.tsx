@@ -69,6 +69,7 @@ const reducer = (cart: CartType, action: Action) => {
         ...cart,
         items: cart.items.map((item) => {
           if (item._id === action.payload.id) {
+            if(item.qty! > item.stock) return;
             toast.success(`Item QTY Increased`);
             return { ...item, qty: item.qty! + 1 };
           }

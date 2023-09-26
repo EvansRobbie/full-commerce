@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <CartContextProvider>
-          <Toaster position='bottom-right'/>
+          <Toaster position='bottom-right'  reverseOrder={false}/>
           <Header />
           <div>
 
