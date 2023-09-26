@@ -153,26 +153,26 @@ const [cart, dispatch] = useReducer(reducer, { items: [] });
     dispatch({ type: ACTION.INCREASE_QUANTITY, payload: { id: id } })
   }
   const decreaseQuantity = (id: string) => {
-      cart.items.map((i)=> i.qty <= 1 && removeFromCart(id, i.title));
+      cart.items.map((i)=> i.qty <= 1 && removeFromCart(id, i.name));
     dispatch({ type: ACTION.DECREASE_QUANTITY, payload: { id: id } })
 
   }
 
-  const fetchCart = async () => {
-    try {
-      const data:any = await AsyncStorageService.getData("cartItems");
-      if (data && Array.isArray(data)) {
-        data.forEach((item) => {
-          // console.log(item)
-          dispatch({ type: ACTION.ADD_TO_CART, payload: {...item} });
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching cart from AsyncStorage:", error);
-    }
-  }
-  useEffect(() => {
 
+  useEffect(() => {
+    const fetchCart = async () => {
+        try {
+          const data:any = await AsyncStorageService.getData("cartItems");
+          if (data && Array.isArray(data)) {
+            data.forEach((item) => {
+              // console.log(item)
+              dispatch({ type: ACTION.ADD_TO_CART, payload: {...item} });
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching cart from AsyncStorage:", error);
+        }
+      }
     fetchCart();
   }, []);
  // Save cart items to AsyncStorage whenever cart changes
