@@ -8,11 +8,15 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   base_url = 'https://full-commerce-mu.vercel.app'
 }
-const getProduct = async ({keyword, page}:{keyword:string, page:string}) => {
+const getProduct = async ({keyword, page, category, ratings, min, max}:{keyword:string, page:string, category:string, ratings:string, min:string, max:string}) => {
 
   const urlParams = {
     keyword,
-    page
+    page,
+    category,
+    'ratings[gte]':ratings,
+    'price[gte]':min,
+    'price[lte]':max,
   }
 
   const searchQuery = queryString.stringify(urlParams)
@@ -26,8 +30,8 @@ const getProduct = async ({keyword, page}:{keyword:string, page:string}) => {
 }
 
 
-export default async function Home({searchParams:{keyword, page}}:{searchParams:{keyword:string, page:string}}) {
-  const productData = await getProduct({keyword, page})
+export default async function Home({searchParams:{keyword, page, category, ratings, min, max}}:{searchParams:{keyword:string, page:string, category:string, ratings:string, min:string, max:string}}) {
+  const productData = await getProduct({keyword, page, category, ratings, min, max})
   return (
     <main className="">
       <ListProducts data= {productData} />

@@ -1,8 +1,57 @@
-import React from "react";
+import { getPriceQueryParams } from "@/heplers/helpers";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import StarRatings from "react-star-ratings";
 
 const Filters = () => {
+  const router = useRouter()
+  const [min, setMin] =useState('')
+  const [max, setMax] =useState('')
   let queryParams:any;
+
+  const handleClick = (checkbox:any) =>{
+    if (typeof window !== 'undefined'){
+      queryParams = new URLSearchParams(window.location.search); 
+    }
+    const checkboxes = document.getElementsByName(checkbox.name)
+    checkboxes && checkboxes.forEach((item:any) =>{
+        if(item !== checkbox) item.checked = false
+    })
+
+    if (checkbox.checked === false){
+      //DELETE THE FILTER FROM  query
+      queryParams.delete(checkbox.name)
+      
+      const path = window.location.pathname + '?' + queryParams.toString()
+            // console.log(path)
+      router.push(path)
+    }else{
+
+      // Set filter in the query
+      if(queryParams.has(checkbox.name)){
+        queryParams.set(checkbox.name, checkbox.value)
+    }else{
+        queryParams.append(checkbox.name, checkbox.value)
+    }
+      const path = window.location.pathname + '?' + queryParams.toString()
+              // console.log(path)
+      router.push(path)
+    }
+    
+  }
+
+  const handleButtonClick = () =>{
+    if (typeof window !== 'undefined'){
+      queryParams = new URLSearchParams(window.location.search); 
+      queryParams = getPriceQueryParams(queryParams, 'min', min)
+      queryParams = getPriceQueryParams(queryParams, 'max', max)
+
+      const path = window.location.pathname + '?' + queryParams.toString()
+      // console.log(path)
+      router.push(path)
+    }
+    
+  }
 
   function checkHandler(checkBoxType:any, checkBoxValue:any) {
     if (typeof window !== "undefined") {
@@ -33,6 +82,8 @@ const Filters = () => {
               className="appearance-none border border-gray-200 bg-gray-100 rounded-md py-2 px-3 hover:border-gray-400 focus:outline-none focus:border-gray-400 w-full"
               type="number"
               placeholder="Min"
+              value={min}
+              onChange={(e) => setMin(e.target.value)}
             />
           </div>
 
@@ -42,11 +93,13 @@ const Filters = () => {
               className="appearance-none border border-gray-200 bg-gray-100 rounded-md py-2 px-3 hover:border-gray-400 focus:outline-none focus:border-gray-400 w-full"
               type="number"
               placeholder="Max"
+              value={max}
+              onChange={(e) => setMax(e.target.value)}
             />
           </div>
 
           <div className="mb-4">
-            <button className="px-1 py-2 text-center w-full inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
+            <button onClick={handleButtonClick} className="px-1 py-2 text-center w-full inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
               Go
             </button>
           </div>
@@ -60,6 +113,7 @@ const Filters = () => {
           <li>
             <label className="flex items-center">
               <input
+                onChange={(e)=> handleClick(e.target)}
                 name="category"
                 type="checkbox"
                 value="Electronics"
@@ -72,6 +126,7 @@ const Filters = () => {
           <li>
             <label className="flex items-center">
               <input
+                onChange={(e)=> handleClick(e.target)}
                 name="category"
                 type="checkbox"
                 value="Laptops"
@@ -84,6 +139,7 @@ const Filters = () => {
           <li>
             <label className="flex items-center">
               <input
+                onChange={(e)=> handleClick(e.target)}
                 name="category"
                 type="checkbox"
                 value="Toys"
@@ -96,6 +152,7 @@ const Filters = () => {
           <li>
             <label className="flex items-center">
               <input
+                onChange={(e)=> handleClick(e.target)}
                 name="category"
                 type="checkbox"
                 value="Office"
@@ -108,6 +165,7 @@ const Filters = () => {
           <li>
             <label className="flex items-center">
               <input
+                onChange={(e)=> handleClick(e.target)}
                 name="category"
                 type="checkbox"
                 value="Beauty"
@@ -131,6 +189,7 @@ const Filters = () => {
                   type="checkbox"
                   value={rating}
                   className="h-4 w-4"
+                  onChange={(e)=> handleClick(e.target)}
                   defaultChecked={checkHandler("ratings", `${rating}`)}
                 />
                 <span className="ml-2 text-gray-500">
