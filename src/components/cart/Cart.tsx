@@ -6,7 +6,7 @@ import React from "react";
 import CartItems from "./CartItems";
 
 const Cart = () => {
-    const {cart, totalPrice} = useCartContext()
+    const {cart, totalPrice, itemQuantity} = useCartContext()
     const taxAmount = (totalPrice * 0.15).toFixed(2)
   return (
     <>
@@ -27,11 +27,11 @@ const Cart = () => {
                 <ul className="mb-5">
                   <li className="flex justify-between text-gray-600  mb-1">
                     <span>Total price:</span>
-                    <span>$ {totalPrice}</span>
+                    <span>$ {totalPrice.toFixed(2)}</span>
                   </li>
                   <li className="flex justify-between text-gray-600  mb-1">
                     <span>Total Units:</span>
-                    <span className="text-green-500">7 (Units)</span>
+                    <span className="text-green-500">{itemQuantity} (Units)</span>
                   </li>
                   <li className="flex justify-between text-gray-600  mb-1">
                     <span>TAX:</span>
@@ -39,7 +39,7 @@ const Cart = () => {
                   </li>
                   <li className="text-lg font-bold border-t flex justify-between mt-3 pt-3">
                     <span>Total price:</span>
-                    <span>$ {Math.floor(Number(totalPrice) + Number(taxAmount))}</span>
+                    <span>$ {(Number(totalPrice) + Number(taxAmount)).toFixed(2)}</span>
                   </li>
                 </ul>
 
