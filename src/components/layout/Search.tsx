@@ -1,12 +1,18 @@
 'use client'
 import React, {useState, useEffect} from "react";
 import axios from 'axios'
+import { useRouter } from "next/navigation";
 
 const Search = () => {
     const [keyword, setKeyword] = useState('')
+    const router = useRouter()
 
     const handleSearch = () =>{
-        axios.post 
+        if (keyword){
+          router.push(`/?keyword=${keyword}`)
+        }else{
+          router.push('/')
+        }
     }
   return (
     <form className="flex flex-nowrap items-center w-full order-last md:order-none mt-5 md:mt-0 md:w-2/4 lg:w-2/4">
@@ -19,6 +25,7 @@ const Search = () => {
         required
       />
       <button
+      onClick={handleSearch}
         type="button"
         className="px-4 py-2 inline-block text-white border border-transparent bg-blue-600 rounded-md hover:bg-blue-700"
       >

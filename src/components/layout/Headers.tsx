@@ -41,14 +41,14 @@ const Header = () => {
             </Link>
             <Link href="/me">
               <div className="flex items-center mb-4 space-x-3 mt-4 cursor-pointer">
-                <div className="relative w-10 h-10 rounded-full">
+                <div className="relative w-10 h-10 flex items-center justify-center bg-[#eee] rounded-full">
                 {/* <Image className="" src={"logo192.png"} alt="Logo" /> */}
                 <h1>E</h1>
 
                 </div>
                 <div className="space-y-1 font-medium">
                   <p>
-                    Ghulam
+                    Robbievans
                     <time className="block text-sm text-gray-500 dark:text-gray-400">
                       test@gmail.com
                     </time>

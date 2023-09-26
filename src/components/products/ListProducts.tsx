@@ -6,12 +6,19 @@ import Header from "../layout/Headers";
 import Link from "next/link";
 import Image from "next/image";
 import { productEntity } from "@/type/type";
+import CustomPagination from "../layout/Pagination";
 
 interface productProps {
-    data:productEntity[]
+    data:{
+        productsCount:number;
+        resPerPage:number;
+        filterdProductsCount:number;
+        products:productEntity[]
+    }
 
 }
 const ListProducts = ({data}:productProps) => {
+   
   return (
     <>
       <section className="py-12">
@@ -22,7 +29,7 @@ const ListProducts = ({data}:productProps) => {
             <main className="md:w-2/3 lg:w-3/4 px-3">
              
                     {
-                        data.map((product)=>(
+                        data.products.map((product)=>(
                             <article key={product._id} className="border border-gray-200 overflow-hidden bg-white shadow-sm rounded mb-5">
                             <div className="flex flex-col md:flex-row">
                                 <div className="md:w-1/4 flex p-3">
@@ -87,7 +94,7 @@ const ListProducts = ({data}:productProps) => {
                             </article>
                         ))
                     }
-              
+              <CustomPagination resPerPage={data.resPerPage} productsCount={data.filterdProductsCount}/>
             </main>
           </div>
         </div>
