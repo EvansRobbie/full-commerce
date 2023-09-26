@@ -1,11 +1,9 @@
 "use client"
 import { productEntity } from '@/type/type';
 import AsyncStorageService from '@/utils/AsyncServiceStorage';
-// import AsyncStorageService from '@/utils/AsyncServiceStorage';
 // import { ProductEntity } from '@/types/product/Product';
 import React, { useContext, createContext, useState, useReducer, useEffect, ReactNode } from 'react'
 import toast from 'react-hot-toast'
-
 
 type Action = {
   type: string;
@@ -68,8 +66,9 @@ const reducer = (cart: CartType, action: Action) => {
       return {
         ...cart,
         items: cart.items.map((item) => {
+          if (item.qty! > item.stock) return;
           if (item._id === action.payload.id) {
-            if(item.qty! > item.stock) return
+            
             toast.success(`Item QTY Increased`);
             return { ...item, qty: item.qty! + 1 };
           }
@@ -81,6 +80,7 @@ const reducer = (cart: CartType, action: Action) => {
       return {
         ...cart, items: cart.items.filter((item) => {
           if (item._id === action.payload.id) {
+            // console.log(item.qty)
             if (item.qty! > 1) {
               toast.success(`Item QTY Decreased`)
               return { ...item, qty: item.qty! -= 1 }
@@ -105,18 +105,15 @@ const reducer = (cart: CartType, action: Action) => {
       return cart
   }
 }
-// const newCart = (cart) =>{
-//   return {cart: cart, qty:+1}
-// }
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
 
 const [cart, dispatch] = useReducer(reducer, { items: [] });
-  // item quantity toatal
+  // item quantity total
   const [itemQuantity, setItemQuantity] = useState(0)
   // Total cart price
   const [totalPrice, setTotalPrice] = useState(0)
 
-  // Total Quanity
+  // Total Quantity
   useEffect(() => {
     const total = cart.items.reduce((accumulator: any, currentIndex) =>
       accumulator + currentIndex.qty
@@ -141,9 +138,7 @@ const [cart, dispatch] = useReducer(reducer, { items: [] });
      
     }
     dispatch({ type: ACTION.ADD_TO_CART, payload: item })
-    // fetchCart()
   }
-
   const removeFromCart = (id:string, name:string) =>{
     toast.success(`${name} removed from Cart`)
     // AsyncStorageService.removeData("cartItems");
@@ -157,22 +152,20 @@ const [cart, dispatch] = useReducer(reducer, { items: [] });
     dispatch({ type: ACTION.DECREASE_QUANTITY, payload: { id: id } })
 
   }
-
-
   useEffect(() => {
     const fetchCart = async () => {
-        try {
-          const data:any = await AsyncStorageService.getData("cartItems");
-          if (data && Array.isArray(data)) {
-            data.forEach((item) => {
-              // console.log(item)
-              dispatch({ type: ACTION.ADD_TO_CART, payload: {...item} });
-            });
-          }
-        } catch (error) {
-          console.error("Error fetching cart from AsyncStorage:", error);
+      try {
+        const data:any = await AsyncStorageService.getData("cartItems");
+        if (data && Array.isArray(data)) {
+          data.forEach((item) => {
+            // console.log(item)
+            dispatch({ type: ACTION.ADD_TO_CART, payload: {...item} });
+          });
         }
+      } catch (error) {
+        console.error("Error fetching cart from AsyncStorage:", error);
       }
+    }
     fetchCart();
   }, []);
  // Save cart items to AsyncStorage whenever cart changes
