@@ -12,5 +12,6 @@ export interface productEntity {
             url:string
         }[],
         reviews: string[],
+        qty?:number
         createdAt: Date
 }
